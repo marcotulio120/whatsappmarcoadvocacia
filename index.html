@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Advocacia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('./images/Simulacao-\(4\).jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.8); /* Branco com 50% de transparência */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            max-width: 200px;
+            height: auto;
+        }
+
+        .welcome-message {
+            margin-bottom: 20px;
+        }
+
+        .question-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .question-bubble {
+            background: #f1f1f1;
+            padding: 20px;
+            border-radius: 20px;
+            position: relative;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .question-bubble:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            border: 10px solid transparent;
+            border-right-color: #f1f1f1;
+            border-left: 0;
+            margin-top: -10px;
+        }
+
+        .answers {
+            margin-top: 20px;
+        }
+
+        .answers button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .answers button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #whatsapp-button {
+            display: none;
+            background-color: #25d366;
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        #whatsapp-button:hover {
+            background-color: #1ebc57;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #whatsapp-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">
+        <img src="./images/logotipo_transparente1.png" alt="Logomarca">
+    </div>
+    <div class="welcome-message">
+        <h2>Precisa de advogado?</h2>
+        <p></p>
+    </div>
+    <div class="question-container" id="question1">
+        <div class="question-bubble">
+            <h3>Selecione o assunto de sua questão</h3>
+            <div class="answers">
+                <button onclick="askSource('Advogado Agrário')">Agrário</button>
+                <button onclick="askSource('Advogado Ambiental')">Ambiental</button>
+                <button onclick="askSource('Regularização de imóvel')">Regularização de imóveis rurais e urbanos</button>
+                <button onclick="askSource('Outros serviços')">Outros serviços</button>
+            </div>
+        </div>
+    </div>
+    <div class="question-container" id="question2" style="display: none;">
+        <div class="question-bubble">
+            <h3>Como você chegou até nós?</h3>
+            <div class="answers">
+                <button onclick="sendWhatsAppMessage('Google')">Google</button>
+                <button onclick="sendWhatsAppMessage('Instagram')">Instagram</button>
+                <button onclick="sendWhatsAppMessage('Indicação de alguém')">Indicação de alguém</button>
+            </div>
+        </div>
+    </div>
+    <a id="whatsapp-button" href="https://api.whatsapp.com/send?phone=556230938776" style="display: none;">Fale conosco no WhatsApp</a>
+</div>
+
+<script>
+    function askSource(service) {
+        document.getElementById('question1').style.display = 'none';
+        document.getElementById('question2').style.display = 'block';
+        localStorage.setItem('service', service);
+    }
+
+    function sendWhatsAppMessage(source) {
+        var service = localStorage.getItem('service');
+        var message = "Olá! Vim do " + source + " e estou interessado em " + service + ". Podemos conversar?";
+        var encodedMessage = encodeURIComponent(message);
+        var whatsappLink = "https://api.whatsapp.com/send?phone=556230938776&text=" + encodedMessage;
+        window.location.href = whatsappLink;
+    }
+</script>
+
+</body>
+</html>
